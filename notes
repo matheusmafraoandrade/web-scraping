@@ -1,0 +1,33 @@
+scrapy startproject coleta: cria pasta com toda a divisão do projeto
+
+spiders possuem 3 objetos principais:
+    Fazer requests ao site
+    Fazer o parser (de-para): transformar os elementos do site em objetos Python
+    Fazer paginação: navegar entre páginas
+
+scrapy shell: abre um terminal do scrapy para testar as requisições
+    fetch('url'): faz requisão para a página
+
+Agentes (user-agent): simular acesso de usuário para passar por bloqueios de scrapers
+    Digitar no chrome: my user agent
+    Em settings.py: USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+
+Middleware: configurações da requisição (proxy, cookies, autenticação...)
+
+response.text: retorna o html completo da página
+
+Buscar o padrão de listas no inspecionar para fazer o parse
+    Em qual div estão os dados que eu euro buscar
+    Buscar pela classe do css: response.css('div.ui-search-result__content')
+        Criar variável produtos que recebe essa lista
+
+Encontrar o texto da marca do primeiro elemento: products.css('span.ui-search-item__brand-discoverability.ui-search-item__group__element::text').get()
+    Get busca o primeiro elemento da lista. ::text busca o conteúdo do elemento
+
+scrapy crawl mercadolivre -o data.json: salva o resultado do parsing em json (posso salvar em csv também)
+
+yield: return dinâmico. Quando faço um return normal, retorna o objeto e morre. Yield retorna até acabar
+
+Callback: quando acessar a próxima pasta, executa esta função novamente
+
+Quando fao muitas requisições, robots.txt bloqueia meu spider. Basta colocar OBEY=False no settings
